@@ -3,314 +3,392 @@
 <html>
 <head>
 
-	<meta charset="UTF-8">
-	<title>HTML character entity converter</title>
+    <meta charset="UTF-8">
+    <title>HTML character entity converter</title>
 
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="format-detection" content="telephone=no">
 
     <style>
-    	
-    	html {
-			font: -apple-system-body;
-			font-family: Arial, Helvetica, Sans-serif;
-			-ms-text-size-adjust: 100%;
-			-webkit-text-size-adjust: 100%;
-			box-sizing: border-box;
-		}
+        
+        html {
+            font: -apple-system-body;
+            font-family: Arial, Helvetica, Sans-serif;
+            -ms-text-size-adjust: 100%;
+            -webkit-text-size-adjust: 100%;
+            box-sizing: border-box;
+        }
 
-		*, 
-		*:before, 
-		*:after {
-		    box-sizing: inherit;
-		}
+        *, 
+        *:before, 
+        *:after {
+            box-sizing: inherit;
+        }
 
-		body, 
-		input {
-			font-size: 16px;
-			font-size: 1rem;
-			line-height: 1.2;
-			padding: 20px;
-			max-width: 28em;
-			margin: 0 auto;
-		}
+        body, 
+        input {
+            font-size: 16px;
+            font-size: 1rem;
+            line-height: 1.2;
+            padding: 10px;
+            max-width: 28em;
+            margin: 0 auto;
+        }
 
-		@media ( min-width: 25em ) {
-			body, 
-			input {
-				font-size: 24px;
-				font-size: 1.5rem;
-			}
-		}
+        @media ( min-width: 25em ) {
+            body, 
+            input {
+                font-size: 24px;
+                font-size: 1.5rem;
+            }
+        }
 
-		h1 {
-			margin: 1em 0;
-			line-height: 1;
-			font-size: 1.5em;
-		}
-		
-		label {
-			display: table-row;
-		}
-		
-		label span {
-			display: table-cell;
-			line-height: 1;
-			vertical-align: middle;
-			padding-top: .25em;
-			padding-bottom: .25em;
-			border-bottom: 1px solid #ddd;
-		}
-		
-		label:first-child span {
-			border-top: 1px solid #ddd;
-		}
-		
-		label span:first-child {
-			width: 80%;
-			padding-right: 5%;
-		}
+        h1 {
+            margin: 0 0 1em;
+            line-height: 1;
+            font-size: 1.5em;
+        }
+        
+        @media ( min-width: 25em ) {
+            h1 {
+                margin: 1em 0;
+            }
+        }
 
-		input {
-			width: 5em;
-			font-family: Arial, Helvetica, Sans-serif;
-			font-weight: normal;
-			border: 1px solid #999;
-			height: 1.6667em;
-			margin: 0;
-			padding: 0 10px;
-			border-radius: 4px;
-			box-shadow: none;
-			background-color: #fff;
-			vertical-align: top;
-		}
+        label {
+            display: table-row;
+        }
+        
+        label span {
+            display: table-cell;
+            line-height: 1;
+            vertical-align: middle;
+            padding: .25em .5em;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        label:first-child span {
+            border-top: 1px solid #ddd;
+            border-bottom: 1px solid #ddd;
+        }
 
-		input:focus {
-			border: 1px solid $blue;
-			outline: 0;
-		}
+        label:nth-child( odd ) span {
+            /*background: #efefef;*/
+        }
+        
+        label span:first-child {
+            width: 80%;
+            padding-right: 5%;
+        }
 
-    	.calc-only {
-    		color: #666;
-    		border-color: #ddd;
-    	}
-		
-		#common-chars {
-			list-style-type: none;
-			margin: 2em 0 1em;
-			padding: 0;
-		}
-		
-		#common-chars li {
-			display: inline-block;
-			width: 1em;
-			margin-right: .25em;
-			color: blue;
-			cursor: pointer;
-			
-			text-align: center;
-		}
-		
-		#common-chars li:hover {
-			text-decoration: underline;
-		}
+        input {
+            width: 5em;
+            font-family: Arial, Helvetica, Sans-serif;
+            font-weight: normal;
+            border: 1px solid #999;
+            height: 1.6667em;
+            margin: 0;
+            padding: 0 10px;
+            border-radius: 4px;
+            box-shadow: none;
+            background-color: #fff;
+            vertical-align: top;
+        }
 
-		[role=contentinfo] {
-			font-size: .6667em;
-			color: #666;
-			border-top: 1px solid #ddd;
-			margin: 4em 0;
-			padding: 2em 0 4em;
-		}
+        input:focus {
+            border: 1px solid $blue;
+            outline: 0;
+        }
 
-	</style>
+        .calc-only {
+            color: #666;
+            border-color: #fff;
+        }
+        
+        #common-chars {
+            list-style-type: none;
+            margin: 2em 0 1em;
+            padding: 0;
+        }
+        
+        #common-chars li {
+            display: inline-block;
+            min-width: 1em;
+            margin-right: .25em;
+            color: blue;
+            cursor: pointer;
+            
+            text-align: center;
+        }
+        
+        #common-chars li:hover {
+            text-decoration: underline;
+        }
+
+        .non-visible:before {
+            content: attr( data-text );
+        }
+
+        [role=contentinfo] {
+            font-size: .6667em;
+            color: #666;
+            border-top: 1px solid #ddd;
+            margin: 4em 0;
+            padding: 2em 0 4em;
+        }
+
+    </style>
 
 </head>
 <body>
 
-	<h1>HTML character entity converter</h1>
+    <h1>HTML character entity converter</h1>
 
-	<div id="calculator">
-		
-		<label>
-			<span>Numeric Value (Decimal)</span>
-			<span>
-				<input type="text" id="entity" maxlength="6" class="input">
-			</span>
-		</label>
+    <div id="calculator">
+        
+        <label>
+            <span>Character</span>
+            <span>
+                <input type="text" id="character" maxlength="1" class="input">
+            </span>
+        </label>
 
-		
-		<label>
-			<span>CSS Value (Hex)</span>
-			<span>
-				<input type="text" id="css-hex" class="calc-only">
-			</span> 
-		</label>
-		
-		<label>
-			<span>JS Value (Hex)</span>
-			<span>
-				<input type="text" id="js-hex" class="calc-only">
-			</span> 
-		</label>
-		
-		<label>
-			<span>Character or HTML character entity</span>
-			<span>
-				<input type="text" id="character" maxlength="1" class="input">
-			</span>
-		</label>
+        <label>
+            <span>HTML character entity</span>
+            <span>
+                <input type="text" id="entity" maxlength="6" class="input">
+            </span>
+        </label>
 
-	</div>
+        
+        <label>
+            <span>Unicode for CSS</span>
+            <span>
+                <input type="text" id="css-hex" class="calc-only">
+            </span> 
+        </label>
+        
+        <label>
+            <span>Unicode for JavaScript</span>
+            <span>
+                <input type="text" id="js-hex" class="calc-only">
+            </span> 
+        </label>
+        
+    </div>
 
-	<ul id="common-chars">
-		<li>&</li>
-		<li>"</li>
-		<li>&gt;</li>
-		<li>&lt;</li>
-	</ul>
+    <ul id="common-chars">
+        <li>&amp;</li>
+        <li>&quot;</li>
+        <li>&ldquo;</li>
+        <li>&rdquo;</li>
+        <li>&lsquo;</li>
+        <li>&rsquo;</li>
+        <li>&hellip;</li>
+        <li>&lt;</li>
+        <li>&gt;</li>
+        <li>&laquo;</li>
+        <li>&raquo;</li>
+        <li>&lsaquo;</li>
+        <li>&rsaquo;</li>
+        <li>&lang;</li>
+        <li>&rang;</li>
+        <li>&copy;</li>
+        <li>&trade;</li>
+        <li>&reg;</li>
+        <li>&deg;</li>
+        <li>&plusmn;</li>
+        <li>&frac12;</li>
+        <li>&frac14;</li>
+        <li>&frac34;</li>
+        <li>&times;</li>
+        <li>&divide;</li>
+        <li>&permil;</li>
+        <li>&sum;</li>
+        <li>&radic;</li>
+        <li>&infin;</li>
+        <li>&sim;</li>
+        <li>&asymp;</li>
+        <li>&ne;</li>
+        <li>&equiv;</li>
+        <li>&le;</li>
+        <li>&ge;</li>
+        <li>&pi;</li>
+        <li>&omega;</li>
+        <li>&ndash;</li>
+        <li>&mdash;</li>
+        <li>&larr;</li>
+        <li>&uarr;</li>
+        <li>&rarr;</li>
+        <li>&darr;</li>
+        <li>&harr;</li>
 
-	<div role="contentinfo">
+        <li class="non-visible" data-text="&amp;shy;">&shy;</li>
+        <li class="non-visible" data-text="&amp;nbsp;">&nbsp;</li>
+    </ul>
 
-		<p><b>2015 Henrik Ekelöf</b></p>
+    <div role="contentinfo">
 
-		<p><a href="http://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references#Character_entity_references_in_HTML">List of XML and HTML character entity references</a> on WikiPedia</p>
+        <p>
+            Created by Henrik Ekelöf, 2015.</b> Twitter: <a href="https://twitter.com/henrikekelof">@henrikekelof</a>
+            <br>
+            Inspired by <a href="http://www.evotech.net/blog/2007/08/css-javascript-character-entities/">CSS & Javascript Character Entity Calculator</a> by Estelle Weyl, 2007
+        </p>
 
-		<p>Inspired by <a href="http://www.evotech.net/blog/2007/08/css-javascript-character-entities/">CSS & Javascript Character Entity Calculator</a> by Estelle Weyl, 2007</p>
+        <p>Fork this on  <a href="https://github.com/henrikekelof/HTML-character-entity-converter">GitHub</a></p>
 
-		
+        <p><a href="http://en.wikipedia.org/wiki/List_of_XML_and_HTML_character_entity_references#Character_entity_references_in_HTML">List of XML and HTML character entity references</a> on WikiPedia</p>
 
-	</div>
+        <p></p>
 
-	<script>
+    </div>
 
-	if ( typeof String.prototype.startsWith !== 'function' ) {
-		String.prototype.startsWith = function ( str ) {
-	    	return this.slice( 0, str.length ) === str;
-		};
-	}
+    <script>
 
-	( function ( win, doc ) {
+    ( function ( doc ) {
 
-		'use strict';
+        'use strict';
 
-		var cssHex = doc.getElementById( 'css-hex' ),
-			jsHex = doc.getElementById( 'js-hex' ),
-			character = doc.getElementById( 'character' ),
-			entity = doc.getElementById( 'entity' ),
-			calculator = doc.getElementById( 'calculator' ),
-			allInputs = doc.getElementsByTagName( 'input' ),
-			commonChars = doc.getElementById( 'common-chars' ),
-			calcOnly = doc.querySelectorAll( '.calc-only' ),
-			inputs = doc.querySelectorAll( '.input' ),
-			i, cssVal, jsVal, entVal, charVal;
+        if ( typeof String.prototype.startsWith !== 'function' ) {
+            String.prototype.startsWith = function ( str ) {
+                return this.slice( 0, str.length ) === str;
+            };
+        }
 
-		calculator.addEventListener( 'click', function ( e ) {
-			if( e.target && e.target.nodeName == 'INPUT' ) {
-				e.target.select();
-			}
-		});
+        if ( typeof String.prototype.endsWith !== 'function' ) {
+            String.prototype.endsWith = function ( str ) {
+                return this.slice( -str.length ) === str;
+            };
+        }
 
-		for ( i = 0; i < calcOnly.length; i += 1 ) {
-			calcOnly[i].addEventListener( 'keydown', function ( e ) {
-		        if (e.keyCode !== 9) { // Tab key
-		        	e.preventDefault();
-		    	}
-		    } );
-		}
+        var cssHex = doc.getElementById( 'css-hex' ),
+            jsHex = doc.getElementById( 'js-hex' ),
+            character = doc.getElementById( 'character' ),
+            entity = doc.getElementById( 'entity' ),
+            calculator = doc.getElementById( 'calculator' ),
+            commonChars = doc.getElementById( 'common-chars' );
 
-		entity.addEventListener( 'keyup', processHtmlEntity );
-		character.addEventListener( 'keyup', processCharacter );
+        function htmlDecode( input ) {
+            var e = document.createElement( 'div' );
+            e.innerHTML = input;
+            return e.childNodes.length === 0 ? '' : e.childNodes[ 0 ].nodeValue;
+        }
 
-		commonChars.addEventListener( 'click', function ( e ) {
-			if( e.target && e.target.nodeName == 'LI' ) {
-				setAllVals( e.target.innerHTML );
-			}
-		});
+        function clearVals( isChar ) {
+            cssHex.value = '';
+            jsHex.value = '';
+            if ( isChar ) {
+                entity.value = '';
+            } else {
+                character.value = '';    
+            }
+        }
 
-		function getFourLetterHexVal( hexVal ) {
-			if ( hexVal.length >= 4 ) {
-				return hexVal.slice( 0, 4 );
-			}
-			return getFourLetterHexVal( '0' + hexVal );
-		}
+        function setCssHexVal( hexVal ) {
+            cssHex.value = '\\' + hexVal;
+        }
 
-		function getHexVal( numVal ) {
-			var hexVal = parseInt( numVal ).toString(16).toUpperCase();
-			hexVal = getFourLetterHexVal( hexVal );
-			return hexVal;
-		}
+        function setJsHexVal( hexVal ) {
+            jsHex.value = '\\u' + hexVal;
+        }
 
-		function setAllVals( html ) {
-			var val = htmlDecode( html );
-			character.value = val;
-			convertChar( val );
-		}
+        function setEntityVal( numVal ) {
+            entity.value = '&#' + numVal + ';';
+        }
 
-		function convertChar( val ) {
-			
-			
-			var numVal = val.charCodeAt().toString(10),
-				hexVal = getHexVal( numVal );
+        function setCharVal( val ) {
+            character.value = val;
+        }
 
-			entity.value = '&#' + numVal;
-			cssHex.value = '\\'  + hexVal;
-			jsHex.value = '\\u'  + hexVal;
+        function setValsFromEntity( numVal ) {
+            var hexVal = getHexVal( numVal );
+            setEntityVal( numVal );
+            setCssHexVal( hexVal );
+            setJsHexVal( hexVal );
+            setCharVal( htmlDecode( '&#' + numVal + ';' ) );
+        }
 
-		}
+        function setValsFromChar( charVal ) {
+            var numVal = charVal.charCodeAt().toString( 10 ),
+                hexVal = getHexVal( numVal );
+            setEntityVal( numVal );
+            setCssHexVal( hexVal );
+            setJsHexVal( hexVal );
+        }
 
-		function processHtmlEntity() {
-			
-			var val = this.value,
-				numVal = parseInt(val, 10);
+        function setAllVals( html ) {
+            var charVal = htmlDecode( html );
+            character.value = charVal;
+            setValsFromChar( charVal );
+        }
 
-			if ( val.slice( 0, 2 ) === '&#' ) {
-				numVal = parseInt( val.slice( 2, val.length ), 10 );
-			}
+        function getHexVal( numVal ) {
+            var hexVal = parseInt( numVal, 10 ).toString( 16 ).toUpperCase(),
+                zeroPad = function ( hexVal ) {
+                    if ( hexVal.length >= 4 ) {
+                        return hexVal.slice( 0, 4 );
+                    }
+                    return zeroPad( '0' + hexVal );
+                };
+            return zeroPad( hexVal );
+        }
+        
+        function handleEntityEvent( val, isBlur ) {
+            var numVal = parseInt( val, 10 );
+            if ( val.startsWith( '&#' ) ) {
+                numVal = parseInt( val.slice( 2, val.length ), 10 );
+            }
+            clearVals( false );
+            if ( val.endsWith( ';' ) || isBlur ) {
+                setValsFromEntity( numVal );    
+            }
+        }
 
-			if ( isNaN( numVal ) ) {
-				return;
-			}
+        function handleCharEvent() {
+            var charVal = this.value;
+            if ( charVal.length === 1 ) {
+                setValsFromChar( charVal );
+            } else {
+                clearVals( true );
+            }
+        }
 
-			
-			this.value = '&#' + numVal;
-			
-			convertHtmlEntity( numVal );
+        calculator.addEventListener( 'click', function ( e ) {
+            if ( e.target && e.target.nodeName === 'INPUT' ) {
+                e.target.select();
+            }
+        } );
 
-		}
+        calculator.addEventListener( 'keydown', function ( e ) {
+            if ( e.target && e.target.nodeName === 'INPUT' &&
+                 e.target.className === 'calc-only' && 
+                 e.keyCode !== 9 ) {
+                e.preventDefault();
+            }
+        } );
 
-		function processCharacter () {
-			var val = this.value;
-			if (val.length === 1) {
-				convertChar( val );
-			}
-		}
+        commonChars.addEventListener( 'click', function ( e ) {
+            if ( e.target && e.target.nodeName === 'LI' ) {
+                setAllVals( e.target.innerHTML );
+            }
+        } );
 
-		function htmlDecode(input){
-			var e = document.createElement('div');
-			e.innerHTML = input;
-			return e.childNodes.length === 0 ? '' : e.childNodes[0].nodeValue;
-		}
+        entity.addEventListener( 'keyup', function () {
+            handleEntityEvent( this.value, false );
+        } );
+        entity.addEventListener( 'blur', function () {
+            handleEntityEvent( this.value, true );
+        } );
 
-		function convertHtmlEntity( numVal ) {
+        character.addEventListener( 'keyup', handleCharEvent );
 
-			var hexVal = getHexVal( numVal );
-			
-			cssHex.value = '\\'  + hexVal;
-			jsHex.value = '\\u'  + hexVal;
-			character.value = htmlDecode('&#' + numVal + ';');
+        if ( !character.value ) {
+            setAllVals( '&#38;' );
+        }
 
-		}
+    }( document ) );
 
-		if (!character.value) {
-			setAllVals( '&#38;' );
-		}
-
-	}( window, document ));
-
-		
-
-	</script>
+    </script>
 
 </body>
 </html>
