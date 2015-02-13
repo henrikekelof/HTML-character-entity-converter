@@ -360,10 +360,16 @@
         } );
 
         calculator.addEventListener( 'keydown', function ( e ) {
-            if ( e.target && e.target.nodeName === 'INPUT' &&
+
+            var c = e.keyCode,
+                    ctrlDown = e.ctrlKey || e.metaKey;
+ 
+            if ( e.target && 
+                 e.target.nodeName === 'INPUT' &&
                  e.target.className === 'calc-only' && 
-                 e.keyCode !== 9 ) {
-                e.preventDefault();
+                 !( ctrlDown && c === 67 )
+                ) {
+                    e.preventDefault();
             }
         } );
 
